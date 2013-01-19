@@ -1,0 +1,16 @@
+Arena
+
+
+Menu
+	>Game
+		>select character
+			>select opponent
+				>fight
+					>fight_round
+						>choose action 
+						Standard attack
+						Furious attack: A+1, D-2
+						Parry: no attack, D+2, A+2 next round
+						Strong attack: A-1, D-1, Dmg +2
+	>Rules
+	>Exit
