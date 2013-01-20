@@ -13,17 +13,15 @@ class Arena(object):
 	
 	def menu(self):
 		"""main options"""
-		print "-------------------------------\n         A*R*E*N*A !!!   \nTurn-based battle game by Misa\n-------------------------------"
-		print "1: PLAY THE GAME\n2: GAME RULES\n3: EXIT:"
-		chosen_menu = raw_input("> ")
-		if chosen_menu == "1":
-			return my_game.play()
-		elif chosen_menu == "2":
-			return my_game.rules()
-		elif chosen_menu == "3":
-			return exit()
-		else: 
-			return my_game.menu()
+		chosen_menu = '1'
+		while chosen_menu not in ('2', '3'):
+			print "-------------------------------\n         A*R*E*N*A !!!   \nTurn-based battle game by Misa\n-------------------------------"
+			print "1: PLAY THE GAME\n2: GAME RULES\n3: EXIT:"
+			chosen_menu = raw_input("> ")
+			if chosen_menu == "1":
+				return my_game.play()
+			elif chosen_menu == "2":
+				return my_game.rules()
 	
 	def play(self):
 		"""basic game scheme"""
