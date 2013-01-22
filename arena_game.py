@@ -3,7 +3,7 @@
 from sys import exit
 from dies_roll import die6, die10
 from characters import heavy, cat, rogue, giant, amazon, two_orc, random_character, p_heavy, p_cat, p_rogue, p_giant, p_amazon, p_two_orc
-from weapons import sabre, great_club, sword, rapier, lance,
+from weapons import sabre, great_club, sword, rapier, lance
 from fight_style import standard, aggressive, defensive, strong, furious, parry, after_parry, after_furious
 
 
@@ -15,14 +15,14 @@ class Arena(object):
     def menu(self):
         """main options"""
         chosen_menu = '1'
-        while chosen_menu not in ('2', '3'):
+        while chosen_menu not in ('3'):
             print "-------------------------------\n         A*R*E*N*A !!!   \nTurn-based battle game by Misa\n-------------------------------"
             print "1: PLAY THE GAME\n2: GAME RULES\n3: EXIT:"
             chosen_menu = raw_input("> ")
             if chosen_menu == "1":
-                return self.play()
+                self.play()
             elif chosen_menu == "2":
-                return self.rules()
+                self.rules()
             elif chosen_menu == "3":
                 exit(0)
 
@@ -41,7 +41,7 @@ class Arena(object):
         print "Your opponent: %s, the %s, fighting with %s." % (self.opponent.name, self.opponent.title, self.opponent.weapon.name)
         print "Hitpoints: %s, Base attack: %s, Defense: %s, %s \n" % (self.opponent.hp, self.opponent.attack, self.opponent.defense, self.opponent.description)
         raw_input("Press any key: ")
-        return self.combat()  # all combat procedures including game endings
+        self.combat()  # all combat procedures including game endings
 
     def choosing_character(self):
         """Choosing predefined player character or create custom character"""
@@ -213,18 +213,19 @@ class Arena(object):
             return standard
 
     def rules(self):
-        game_rules = {1: "BASIC SYSTEM:\nIn this game, you select your character and you fight in arena against selected foe. Both fighters have HitPoints, Attack and Defense stats. First combanatnt with zero or less HP loses the fight and game ends. ",
-                      2: "FIGHTING ROUND:\n\nEach round both opponent try to hit each other.\nWhen the combatant is attacking, he makes random 1d10 roll (1-10). Then he adds his base attack, and his weapon attack bonus and bonus for his style. If total score is higher than opponent Defense score, the opponent is his. Combatant then rolls his damage roll, which depends on his weapon. Result is substracted from opponents HitPoints.",
-                      3: "FIGHTING STYLES:\nAt the beginning of each round, you can choose your fighting style for the round. Each one can alter your stats in some way:",
-                      4: "WEAPONS\n: There are different weapons in game, each has its own attack and damage modifier. For example Sword has attack bonus 0, and deal damage of 1d6 + 1, e.g. one roll of six-sided dice plus 0, so the range is between 2 - 7."}
+        game_rules = {"1": "BASIC SYSTEM:\nIn this game, you select your character and you fight in arena against selected foe. Both fighters have HitPoints, Attack and Defense stats. First combanatnt with zero or less HP loses the fight and game ends. ",
+                      "2": "FIGHTING ROUND:\n\nEach round both opponent try to hit each other.\nWhen the combatant is attacking, he makes random 1d10 roll (1-10). Then he adds his base attack, and his weapon attack bonus and bonus for his style. If total score is higher than opponent Defense score, the opponent is his. Combatant then rolls his damage roll, which depends on his weapon. Result is substracted from opponents HitPoints.",
+                      "3": "FIGHTING STYLES:\nAt the beginning of each round, you can choose your fighting style for the round. Each one can alter your stats in some way:",
+                      "4": "WEAPONS\n: There are different weapons in game, each has its own attack and damage modifier. For example Sword has attack bonus 0, and deal damage of 1d6 + 1, e.g. one roll of six-sided dice plus 0, so the range is between 2 - 7."}
         chosen_rule = None
-        while chosen_rule not in ("1", "2", "3", "4"):
+        while chosen_rule != "5":
             print "GAME RULES:\n1: BASIC SYSTEM\n2: FIGHTING ROUND\n3: FIGHTING STYLES\n4: WEAPONS\n5: BACK TO MAIN MENU"
             chosen_rule = raw_input("> ")
-            if chosen_rule in ("1", "2", "3", "4"):
-                print game_rules[int(chosen_rule)]
-            elif chosen_rule == 5:
-                return self.menu()
+            try:
+                print game_rules[chosen_rule]
+            except KeyError:
+                pass
+                #  return self.menu()
         """
         if chosen_rule == "1":
             print "BASIC SYSTEM:\nIn this game, you select your character and you fight in arena against selected foe. Both fighters have HitPoints, Attack and Defense stats. First combanatnt with zero or less HP loses the fight and game ends. "
@@ -254,10 +255,6 @@ class Arena(object):
         else:
             return self.rules()
         """
-
-    def test(self):
-        """for testing purpose"""
-        return "Testing..."
 
 
 my_game = Arena("Misa")
