@@ -213,48 +213,27 @@ class Arena(object):
             return standard
 
     def rules(self):
+        weapons = [sabre, great_club, sword, rapier, lance]
+        styles = [standard, aggressive, defensive, strong, furious, parry]
         game_rules = {"1": "BASIC SYSTEM:\nIn this game, you select your character and you fight in arena against selected foe. Both fighters have HitPoints, Attack and Defense stats. First combanatnt with zero or less HP loses the fight and game ends. ",
                       "2": "FIGHTING ROUND:\n\nEach round both opponent try to hit each other.\nWhen the combatant is attacking, he makes random 1d10 roll (1-10). Then he adds his base attack, and his weapon attack bonus and bonus for his style. If total score is higher than opponent Defense score, the opponent is his. Combatant then rolls his damage roll, which depends on his weapon. Result is substracted from opponents HitPoints.",
                       "3": "FIGHTING STYLES:\nAt the beginning of each round, you can choose your fighting style for the round. Each one can alter your stats in some way:",
-                      "4": "WEAPONS\n: There are different weapons in game, each has its own attack and damage modifier. For example Sword has attack bonus 0, and deal damage of 1d6 + 1, e.g. one roll of six-sided dice plus 0, so the range is between 2 - 7."}
+                      "4": "WEAPONS:\nThere are different weapons in game, each has its own attack and damage modifier. For example Sword has attack bonus 0, and deal damage of 1d6 + 1, e.g. one roll of six-sided dice plus 0, so the range is between 2 - 7." 
+                      }
         chosen_rule = None
         while chosen_rule != "5":
             print "GAME RULES:\n1: BASIC SYSTEM\n2: FIGHTING ROUND\n3: FIGHTING STYLES\n4: WEAPONS\n5: BACK TO MAIN MENU"
             chosen_rule = raw_input("> ")
             try:
                 print game_rules[chosen_rule]
+                if chosen_rule == "3":
+                    for style in styles:
+                        print "%s: attack %s, defense %s, damage bonus %s. %s" % (style.name, style.attack_bonus, style.defense, style.damage_bonus, style.style_desc)
+                if chosen_rule == "4":
+                    for weapon in weapons:
+                        print "%s: attack %s, damage: %s" % (weapon.name, weapon.attack, weapon.damage_string)
             except KeyError:
                 pass
-                #  return self.menu()
-        """
-        if chosen_rule == "1":
-            print "BASIC SYSTEM:\nIn this game, you select your character and you fight in arena against selected foe. Both fighters have HitPoints, Attack and Defense stats. First combanatnt with zero or less HP loses the fight and game ends. "
-            return self.rules()
-        elif chosen_rule == "2":
-            print "FIGHTING ROUND:\n\nEach round both opponent try to hit each other.\nWhen the combatant is attacking, he makes random 1d10 roll (1-10). Then he adds his base attack, and his weapon attack bonus and bonus for his style. If total score is higher than opponent Defense score, the opponent is his. Combatant then rolls his damage roll, which depends on his weapon. Result is substracted from opponents HitPoints."
-            return self.rules()
-        elif chosen_rule == "3":
-            print "FIGHTING STYLES:\nAt the beginning of each round, you can choose your fighting style for the round. Each one can alter your stats in some way:"
-            print "%s: attack %s, defense %s, damage bonus %s." % (standard.name, standard.attack_bonus, standard.defense, standard.damage_bonus)
-            print "%s: attack %s, defense %s, damage bonus %s." % (aggressive.name, aggressive.attack_bonus, aggressive.defense, aggressive.damage_bonus)
-            print "%s: attack %s, defense %s, damage bonus %s." % (defensive.name, defensive.attack_bonus, defensive.defense, defensive.damage_bonus)
-            print "%s: attack %s, defense %s, damage bonus %s." % (strong.name, strong.attack_bonus, strong.defense, strong.damage_bonus)
-            print "%s: attack %s, defense %s, damage bonus %s. \nNext turn, fighter will recovery from this attack, will not be able to choose new style and his attack will be -10" % (furious.name, furious.attack_bonus, furious.defense, furious.damage_bonus)
-            print "%s: attack %s, defense %s, damage bonus %s. \nNext turn, fighter will make attack from his parry, with bonus attack +2, damage +2" % (parry.name, parry.attack_bonus, parry.defense, parry.damage_bonus)
-            return self.rules()
-        elif chosen_rule == "4":
-            print "WEAPONS\n: There are different weapons in game, each has its own attack and damage modifier. For example Sword has attack bonus 0, and deal damage of 1d6 + 1, e.g. one roll of six-sided dice plus 0, so the range is between 2 - 7."
-            print "1: %s, attack %s, damage: %s" % (sabre.name, sabre.attack, sabre.damage_string)
-            print "2: %s, attack %s, damage: %s" % (great_club.name, great_club.attack, great_club.damage_string)
-            print "3: %s, attack %s, damage: %s" % (sword.name, sword.attack, sword.damage_string)
-            print "4: %s, attack %s, damage: %s" % (rapier.name, rapier.attack, rapier.damage_string)
-            print "5: %s, attack %s, damage: %s" % (lance.name, lance.attack, lance.damage_string)
-            return self.rules()
-        elif chosen_rule == "5":
-            return self.menu()
-        else:
-            return self.rules()
-        """
 
 
 my_game = Arena("Misa")
