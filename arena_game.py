@@ -45,67 +45,39 @@ class Arena(object):
 
     def choosing_character(self):
         """Choosing predefined player character or create custom character"""
+        player_chars = {"1": p_heavy, "2": p_cat, "3": p_rogue, "4": p_giant, "5": p_amazon, "6": p_two_orc}  # pre-built characters
+        weapons = {"1": sabre, "2": great_club, "3": sword, "4": rapier, "5": lance}
         print "Choose your warrior:"
-        print "1: %s, %s" % (p_heavy.name, p_heavy.title)
-        print "2: %s, %s" % (p_cat.name, p_cat.title)
-        print "3: %s, %s" % (p_rogue.name, p_rogue.title)
-        print "4: %s, %s" % (p_giant.name, p_giant.title)
-        print "5: %s, %s" % (p_amazon.name, p_amazon.title)
-        print "6: %s, %s" % (p_two_orc.name, p_two_orc.title)
+        for index, character in player_chars.iteritems():  # prints all pre-built characters
+            print "%s: %s, %s" % (index, character.name, character.title)
         print "7: Custom character"
         choose = raw_input("> ")
-        if choose == "1":  # pre-built characters
-            return p_heavy
-        elif choose == "2":
-            return p_cat
-        elif choose == "3":
-            return p_rogue
-        elif choose == "4":
-            return p_giant
-        elif choose == "5":
-            return p_amazon
-        elif choose == "6":
-            return p_two_orc
-        elif choose == "7":
-            print "Choose your name:"
-            random_character.name = raw_input("> ")  # custom name
-            print "Select weapon:"  # custom character weapons
-            print "1: %s, attack %s, damage: %s" % (sabre.name, sabre.attack, sabre.damage_string)
-            print "2: %s, attack %s, damage: %s" % (great_club.name, great_club.attack, great_club.damage_string)
-            print "3: %s, attack %s, damage: %s" % (sword.name, sword.attack, sword.damage_string)
-            print "4: %s, attack %s, damage: %s" % (rapier.name, rapier.attack, rapier.damage_string)
-            print "5: %s, attack %s, damage: %s" % (lance.name, lance.attack, lance.damage_string)
-            player_weapon = raw_input("> ")
-            if player_weapon == "1":
-                random_character.weapon = sabre
-            elif player_weapon == "2":
-                random_character.weapon = great_club
-            elif player_weapon == "3":
-                random_character.weapon = sword
-            elif player_weapon == "4":
-                random_character.weapon = rapier
-            elif player_weapon == "5":
-                random_character.weapon = lance
-            return random_character
-        else:
-            print "Try again"
-            return self.choosing_character()
+        while choose not in player_chars or choose != "7":
+            try:
+                return player_chars[choose]
+            except KeyError:
+                if choose == "7":
+                    print "Choose your name:"
+                    random_character.name = raw_input("> ")  # custom name
+                    print "Select weapon:"  # custom character weapons
+                    for index, weapon in weapons.iteritems():
+                        print "%s: %s, attack %s, damage: %s" % (index, weapon.name, weapon.attack, weapon.damage_string)
+                    player_weapon = None
+                    while player_weapon not in weapons:
+                        player_weapon = raw_input("> ")
+                        try:
+                            random_character.weapon = weapons[player_weapon]
+                        except KeyError:
+                            print "Try again"
+                    return random_character
+                else:
+                    print "Try again"
 
     def random_opponent(self):
         """randomly choosing an opponent"""
+        opp_chars = {1: heavy, 2: cat, 3: rogue, 4: giant, 5: amazon, 6: two_orc}  # pre-built characters
         opp_roll = die6()
-        if opp_roll == 1:
-            return heavy
-        elif opp_roll == 2:
-            return cat
-        elif opp_roll == 3:
-            return rogue
-        elif opp_roll == 4:
-            return giant
-        elif opp_roll == 5:
-            return amazon
-        elif opp_roll == 6:
-            return two_orc
+        return opp_chars[opp_roll]
 
     def combat(self):
         """ Basic scheme of combat, rounds counting, styles history, win/lose conditions, endings"""
@@ -186,13 +158,14 @@ class Arena(object):
 
     def player_choose_style(self):
         """each round, player is selecting new fighting style"""
+        styles = {"1": standard, "2": aggressive, "3": defensive, "4": strong, "5": furious, "6": parry}
         chosen_style = None
-        styles = {1: standard, 2: aggressive, 3: defensive, 4: strong, 5: furious, 6: parry}
-        while chosen_style not in("1", "2", "3", "4", "5", "6"):
+        while chosen_style not in styles:
             chosen_style = raw_input("Select your style: 1:standard, 2:aggressive, 3:defensive, 4:strong, 5:furious, 6:parry")
-            if chosen_style in ("1", "2", "3", "4", "5", "6"):
-                return styles[int(chosen_style)]
-                break
+            if chosen_style in styles:
+                return styles[chosen_style]
+            else:
+                print "Try again"
 
     def opponent_choose_style(self):
         """each round, opponent is randomly selecting new fighting style"""
@@ -218,7 +191,7 @@ class Arena(object):
         game_rules = {"1": "BASIC SYSTEM:\nIn this game, you select your character and you fight in arena against selected foe. Both fighters have HitPoints, Attack and Defense stats. First combanatnt with zero or less HP loses the fight and game ends. ",
                       "2": "FIGHTING ROUND:\n\nEach round both opponent try to hit each other.\nWhen the combatant is attacking, he makes random 1d10 roll (1-10). Then he adds his base attack, and his weapon attack bonus and bonus for his style. If total score is higher than opponent Defense score, the opponent is his. Combatant then rolls his damage roll, which depends on his weapon. Result is substracted from opponents HitPoints.",
                       "3": "FIGHTING STYLES:\nAt the beginning of each round, you can choose your fighting style for the round. Each one can alter your stats in some way:",
-                      "4": "WEAPONS:\nThere are different weapons in game, each has its own attack and damage modifier. For example Sword has attack bonus 0, and deal damage of 1d6 + 1, e.g. one roll of six-sided dice plus 0, so the range is between 2 - 7." 
+                      "4": "WEAPONS:\nThere are different weapons in game, each has its own attack and damage modifier. For example Sword has attack bonus 0, and deal damage of 1d6 + 1, e.g. one roll of six-sided dice plus 0, so the range is between 2 - 7."
                       }
         chosen_rule = None
         while chosen_rule != "5":
