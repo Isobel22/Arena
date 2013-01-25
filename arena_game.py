@@ -48,7 +48,7 @@ class Arena(object):
         player_chars = {"1": p_heavy, "2": p_cat, "3": p_rogue, "4": p_giant, "5": p_amazon, "6": p_two_orc}  # pre-built characters
         weapons = {"1": sabre, "2": great_club, "3": sword, "4": rapier, "5": lance}
         print "Choose your warrior:"
-        for index, character in player_chars.iteritems():  # prints all pre-built characters
+        for index, character in sorted(player_chars.iteritems()):  # prints all pre-built characters
             print "%s: %s, %s" % (index, character.name, character.title)
         print "7: Custom character"
         choose = raw_input("> ")
@@ -60,7 +60,7 @@ class Arena(object):
                     print "Choose your name:"
                     random_character.name = raw_input("> ")  # custom name
                     print "Select weapon:"  # custom character weapons
-                    for index, weapon in weapons.iteritems():
+                    for index, weapon in sorted(weapons.iteritems()):
                         print "%s: %s, attack %s, damage: %s" % (index, weapon.name, weapon.attack, weapon.damage_string)
                     player_weapon = None
                     while player_weapon not in weapons:
