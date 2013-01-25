@@ -1,16 +1,24 @@
-Arena
+Arena game scheme
 
-
-Menu
-	>Game
-		>select character
-			>select opponent
-				>fight
-					>fight_round
-						>choose action 
-						Standard attack
-						Furious attack: A+1, D-2
-						Parry: no attack, D+2, A+2 next round
-						Strong attack: A-1, D-1, Dmg +2
-	>Rules
-	>Exit
+menu()
+    >play()
+        >choosing_character()
+        >random_opponent()
+        >combat()
+            >combat_round() looping until one is dead
+                >player attack
+                    >choose style()
+                    >attack roll
+                    >results
+                >opponent attack
+                    >choose style()
+                    >attack roll
+                    >results
+            >when one character is dead, game result					
+    >rules()
+        >basics
+        >fighting round
+        >fighting styles
+        >weapons
+        >back
+    >exit()
