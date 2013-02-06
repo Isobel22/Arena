@@ -1,0 +1,21 @@
+
+IDEAS FOR FUTURE:
+
+Iniciative roll 
+    Each round, order of attackers is decided by random.
+    So that, some rounds Player is attacking first, some rounds AI is attacking first. 
+    Also, the iniciative rolls can be moddified by Character stats - some are just quicker than others...
+    In this case, check on if combatant is living/dead should be after each attack, not at the end of the round 
+    otherwise there would be no advantage of being first)
+    This will avoid DRAW situations :-)
+
+Multiplayer - human versus human
+    Actually, this will be pretty easy now
+    
+Clever AI
+    Computer will have more complex algorithm for deciding what style to choose, depending on his stats and situation.
+    
+More combatants
+    On either side there can be more combatants fighting
+    For example two weak orc instead of one mighty character
+    Or create real small battles of several combatants
