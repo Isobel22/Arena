@@ -17,7 +17,7 @@ class Character(object):
     def create_instance(self, select):
         pass  # This pass has same meaning as it has in a Poker game. It means "I give up this time" :-)
 
-    def attacking(self, defender):
+    def attacking(self, defender, isHumanPlayerAttacking):
         """Attacker (self) is attacking the defender"""
         print "%s is attacking!!!\n-------------------------------" % self.name
 
@@ -26,7 +26,7 @@ class Character(object):
         elif self.current_style == furious:
             self.current_style = after_furious
         else:
-            self.current_style = standard  # but soon should be choosable,    self.player_choose_style()
+            self.current_style = self.choose_style(isHumanPlayerAttacking)
         print "%s is using %s this round." % (self.name, self.current_style.name)
 
         attack_roll = self.current_style.attack_roll()  # attack roll
@@ -45,6 +45,34 @@ class Character(object):
         else:  # missing opponent
             print "MISSED!\n%s %s, but missed his foe." % (self.name, self.current_style.attack_desc)
         raw_input(">")
+
+    def choose_style(self, isHumanPlayerAttacking):
+        """each round, combatants are selecting new fighting style"""
+        chosen_style = None
+        if isHumanPlayerAttacking:  # for Human Player - he chooses himself
+            styles = {"1": standard, "2": aggressive, "3": defensive, "4": strong, "5": furious, "6": parry}
+            while chosen_style not in styles:
+                chosen_style = raw_input("Select your style: 1:standard, 2:aggressive, 3:defensive, 4:strong, 5:furious, 6:parry")
+                if chosen_style in styles:
+                    return styles[chosen_style]
+                else:
+                    print "Try again"
+        else:  # for AI Player - program randomly chooses style
+            chosen_style = die10()
+            if chosen_style in range(1, 4):
+                return standard
+            elif chosen_style in range(4, 6):
+                return aggressive
+            elif chosen_style == 6:
+                return defensive
+            elif chosen_style in range(7, 9):
+                return strong
+            elif chosen_style == 9:
+                return furious
+            elif chosen_style == 10:
+                return parry
+            else:
+                return standard
 
 
 """ Predefined opponents """

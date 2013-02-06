@@ -84,8 +84,8 @@ class Arena(object):
         round = 1
         while self.player.hp > 0 and self.opponent.hp > 0:
             print "-------------------------------\nFighting round %s began!\n-------------------------------" % round
-            self.player.attacking(self.opponent)
-            self.opponent.attacking(self.player)
+            self.player.attacking(self.opponent, True)
+            self.opponent.attacking(self.player, False)
             round += 1
         if self.player.hp <= 0 and self.opponent.hp > 0:  # LOSE
             print "-------------------------------\n%s is falling to the ground, heavily wounded.\nYOU LOST THIS MATCH!!!\n------------------------------- " % self.player.name
@@ -94,35 +94,6 @@ class Arena(object):
         elif self.player.hp <= 0 and self.opponent.hp <= 0:  # DRAW
             print "-------------------------------\nYou brutally hit %s in same moment, as %s hit you. You both are falling to the ground, heavily wounded.\nTHIS WAS A DOUBLE KILL!!!\n------------------------------- " % (self.opponent.name, self.opponent.name)
         raw_input("Press any key:")
-
-    def player_choose_style(self):
-        """each round, player is selecting new fighting style"""
-        styles = {"1": standard, "2": aggressive, "3": defensive, "4": strong, "5": furious, "6": parry}
-        chosen_style = None
-        while chosen_style not in styles:
-            chosen_style = raw_input("Select your style: 1:standard, 2:aggressive, 3:defensive, 4:strong, 5:furious, 6:parry")
-            if chosen_style in styles:
-                return styles[chosen_style]
-            else:
-                print "Try again"
-
-    def opponent_choose_style(self):
-        """each round, opponent is randomly selecting new fighting style"""
-        chosen_style = die10()
-        if chosen_style in range(1, 4):
-            return standard
-        elif chosen_style in range(4, 6):
-            return aggressive
-        elif chosen_style == 6:
-            return defensive
-        elif chosen_style in range(7, 9):
-            return strong
-        elif chosen_style == 9:
-            return furious
-        elif chosen_style == 10:
-            return parry
-        else:
-            return standard
 
     def rules(self):
         weapons = [sabre, great_club, sword, rapier, lance]
